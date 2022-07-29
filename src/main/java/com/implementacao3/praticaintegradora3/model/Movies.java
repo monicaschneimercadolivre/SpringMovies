@@ -1,8 +1,8 @@
 package com.implementacao3.praticaintegradora3.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,11 +10,10 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Data
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
-
 public class Movies {
 
     @Id
@@ -36,19 +35,20 @@ public class Movies {
 
     private Integer length;
 
-    @ManyToMany (cascade = CascadeType.REFRESH)
-    @JoinTable(name= "actor_movie",
-            joinColumns = @JoinColumn(name="movie_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name="actor_id", referencedColumnName = "id")
-    )
-    @JsonIgnoreProperties({"movieList","favoriteMovie"})
-    private List<Actors> actorsList;
+//    @ManyToMany (cascade = CascadeType.REFRESH)
+//    @JoinTable(name= "actor_movie",
+//            joinColumns = @JoinColumn(name="movie_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name="actor_id", referencedColumnName = "id")
+//    )
+//    @JsonIgnoreProperties({"movieList","favoriteMovie"})
+//    private List<Actors> actorsList;
 
-    @OneToMany (mappedBy = "favoriteMovie",cascade = CascadeType.REFRESH)
+    @ManyToMany(mappedBy = "movieList", cascade = CascadeType.REFRESH)
+    @JsonIgnoreProperties({"movieList", "favoriteMovie"})
+    private List<Actors> actors;
+
+    @OneToMany (mappedBy = "favoriteMovie", cascade = CascadeType.REFRESH)
     @JsonIgnoreProperties ({"favoriteMovie", "movieList"})
     private List<Actors> actorsWhoLikedThisMovies;
-
-
-
 
 }
