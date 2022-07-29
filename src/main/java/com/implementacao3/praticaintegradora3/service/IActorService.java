@@ -7,4 +7,6 @@ public interface IActorService {
     Actors findByFirstName(String fistName);
 
     Actors findByLastName(String fistName);
+
+    Actors findByFirstNameAndLastName (String firstName, String lastName);
 }

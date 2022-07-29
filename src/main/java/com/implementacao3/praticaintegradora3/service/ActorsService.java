@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ActorsService implements IActorService{
@@ -37,8 +38,7 @@ public class ActorsService implements IActorService{
 //                    // throw new Exception("lala");
 //                }
 //            }
-        if (findByFirstName(actor.getFirstName()) != null
-                && findByLastName(actor.getLastName()) != null){
+        if (findByFirstNameAndLastName(actor.getFirstName(),actor.getLastName())!=null){
             System.out.println("Ator já existe no banco de dados");
             return null;
         }
@@ -49,6 +49,7 @@ public class ActorsService implements IActorService{
 
     }
 
+
     @Override
     public Actors findByFirstName(String fistName) {
         return actorRepo.findByFirstName(fistName);
@@ -58,4 +59,14 @@ public class ActorsService implements IActorService{
     public Actors findByLastName(String fistName) {
         return actorRepo.findByLastName(fistName);
     }
+
+    @Override
+    public Actors findByFirstNameAndLastName(String firstName, String lastName) {
+
+        return actorRepo.findByFirstNameAndLastName(firstName,lastName);
+    }
+
+  /*  public Actors saveWithMap(Map<String, Object> mapSave){
+        Map<String,Object>  = new
+    }*/
 }

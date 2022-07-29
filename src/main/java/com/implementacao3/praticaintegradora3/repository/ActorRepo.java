@@ -11,4 +11,6 @@ public interface ActorRepo extends CrudRepository<Actors, Long> {
 
     Actors findByLastName(String firstName);
 
+    Actors findByFirstNameAndLastName (String firstName, String lastName);
+
 }
