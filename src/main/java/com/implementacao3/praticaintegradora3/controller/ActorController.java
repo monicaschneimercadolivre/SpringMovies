@@ -1,7 +1,6 @@
 package com.implementacao3.praticaintegradora3.controller;
 
 import com.implementacao3.praticaintegradora3.model.Actors;
-import com.implementacao3.praticaintegradora3.model.Movies;
 import com.implementacao3.praticaintegradora3.repository.ActorRepo;
 import com.implementacao3.praticaintegradora3.service.ActorsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +16,11 @@ public class ActorController {
     private ActorRepo repo;
 
     @Autowired
-    private ActorsService service;
+    private ActorsService actorsService;
 
     @PostMapping
-    public ResponseEntity<Actors> novoActor(@RequestBody Actors actor)  {
-        return ResponseEntity.ok(service.save(actor));
+    public ResponseEntity<Actors> novoActor(@RequestBody Actors actor) throws Exception {
+        return ResponseEntity.ok(actorsService.saveActor(actor));
     }
 
     @GetMapping("/{id}")
