@@ -34,11 +34,11 @@ public class MovieService implements IMoviesService {
         if(findByMovieTitle(movie.getTitle())!=null){
             throw new Exception("O movie já existe");
         }
-        Movies newMovie = movieRepo.save(movie);
-        movie.setId(newMovie.getId());
+
+
         actorsService.saveAllActors(movie.getActorsWhoLikedThisMovies());
         actorsService.saveAllActors(movie.getActorsList());
-        return newMovie;
+        return  movieRepo.save(movie);
     }
 
 }

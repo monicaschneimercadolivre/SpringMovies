@@ -21,6 +21,9 @@ public class ActorsService implements IActorService{
     @Autowired
     private MovieService movieService;
 
+    @Autowired
+    private MovieRepo movieRepo;
+
     public List<Actors> saveAllActors (List<Actors> actorsList){
         return (List<Actors>) actorRepo.saveAll(actorsList);
     }
@@ -40,11 +43,11 @@ public class ActorsService implements IActorService{
         if (findByFirstNameAndLastName(actor.getFirstName(),actor.getLastName())!=null){
             throw new Exception("já existe o ator");
         }
-        Actors newActor = actorRepo.save(actor);
-        actor.setId(newActor.getId());
-        movieService.saveMovie(actor.getFavoriteMovie());
+        //Actors newActor = actorRepo.save(actor);
+       // actor.setId(newActor.getId());
+        movieRepo.save(actor.getFavoriteMovie());
         movieService.saveAllMovies(actor.getMovieList());
-        return newActor;
+        return actorRepo.save(actor);
 
     }
 
@@ -65,7 +68,5 @@ public class ActorsService implements IActorService{
         return actorRepo.findByFirstNameAndLastName(firstName,lastName);
     }
 
-  /*  public Actors saveWithMap(Map<String, Object> mapSave){
-        Map<String,Object>  = new
-    }*/
+
 }
