@@ -43,12 +43,14 @@ public class Movies {
 //    @JsonIgnoreProperties({"movieList","favoriteMovie"})
 //    private List<Actors> actorsList;
 
-    @ManyToMany(mappedBy = "movieList", cascade = CascadeType.REFRESH)
+    @ManyToMany(mappedBy = "movieList")
     @JsonIgnoreProperties({"movieList", "favoriteMovie"})
     private List<Actors> actors;
 
-    @OneToMany (mappedBy = "favoriteMovie", cascade = CascadeType.REFRESH)
+    @OneToMany (mappedBy = "favoriteMovie")
     @JsonIgnoreProperties ({"favoriteMovie", "movieList"})
     private List<Actors> actorsWhoLikedThisMovies;
 
+    @ManyToOne (cascade = CascadeType.REFRESH)
+    private ActorsMovies idMoviesActors;
 }

@@ -43,6 +43,8 @@ public class ActorsService implements IActorService{
             return null;
         }
 
+
+
         movieService.saveMovie(actor.getFavoriteMovie());
         movieService.saveAll(actor.getMovieList());
         return actorRepo.save(actor);
