@@ -4,6 +4,7 @@ import com.implementacao3.praticaintegradora3.model.Actors;
 import com.implementacao3.praticaintegradora3.model.Movies;
 import com.implementacao3.praticaintegradora3.repository.ActorRepo;
 import com.implementacao3.praticaintegradora3.repository.MovieRepo;
+import com.implementacao3.praticaintegradora3.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +17,13 @@ public class MovieController {
     @Autowired
     private MovieRepo repo;
 
-    @PostMapping 
-    public ResponseEntity<Movies> novoMovie(@RequestBody Movies movie){
+    @Autowired
+    private MovieService movieService;
 
-        return ResponseEntity.ok(repo.save(movie));
+    @PostMapping 
+    public ResponseEntity<Movies> novoMovie(@RequestBody Movies movie) throws Exception {
+
+        return ResponseEntity.ok(movieService.saveMovie(movie));
     }
 
     @GetMapping("/{id}")

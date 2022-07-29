@@ -21,16 +21,14 @@ public class ActorsService implements IActorService{
     @Autowired
     private MovieService movieService;
 
-    @Autowired
-    private MovieRepo repoMovie;
-
-    public List<Actors> findAll(){
-        return null;
+    public List<Actors> saveAllActors (List<Actors> actorsList){
+        return (List<Actors>) actorRepo.saveAll(actorsList);
     }
 
+
     @Transactional
-    public Actors save(Actors actor)  {
-        List<Actors> actorsListDb = (List<Actors>) actorRepo.findAll();
+    public Actors saveActor(Actors actor) throws Exception {
+      //  List<Actors> actorsListDb = (List<Actors>) actorRepo.findAll();
 //            for (Actors a: actorsListDb) {
 //                if (actor.getFirst_name().equalsIgnoreCase(a.getFirst_name()) &&
 //                        actor.getLast_name().equalsIgnoreCase(a.getLast_name())) {
@@ -38,16 +36,15 @@ public class ActorsService implements IActorService{
 //                    // throw new Exception("lala");
 //                }
 //            }
+        //aqui estamos delegando a tarefa para o banco trazeer só o que queremos
         if (findByFirstNameAndLastName(actor.getFirstName(),actor.getLastName())!=null){
-            System.out.println("Ator já existe no banco de dados");
-            return null;
+            throw new Exception("já existe o ator");
         }
-
-
-
+        Actors newActor = actorRepo.save(actor);
+        actor.setId(newActor.getId());
         movieService.saveMovie(actor.getFavoriteMovie());
-        movieService.saveAll(actor.getMovieList());
-        return actorRepo.save(actor);
+        movieService.saveAllMovies(actor.getMovieList());
+        return newActor;
 
     }
 

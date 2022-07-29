@@ -35,19 +35,11 @@ public class Movies {
 
     private Integer length;
 
-//    @ManyToMany (cascade = CascadeType.REFRESH)
-//    @JoinTable(name= "actor_movie",
-//            joinColumns = @JoinColumn(name="movie_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name="actor_id", referencedColumnName = "id")
-//    )
-//    @JsonIgnoreProperties({"movieList","favoriteMovie"})
-//    private List<Actors> actorsList;
-
-    @ManyToMany(mappedBy = "movieList")
+    @ManyToMany(mappedBy = "movieList", cascade = CascadeType.PERSIST)
     @JsonIgnoreProperties({"movieList", "favoriteMovie"})
-    private List<Actors> actors;
+    private List<Actors> actorsList;
 
-    @OneToMany (mappedBy = "favoriteMovie")
+    @OneToMany (mappedBy = "favoriteMovie", cascade = CascadeType.PERSIST)
     @JsonIgnoreProperties ({"favoriteMovie", "movieList"})
     private List<Actors> actorsWhoLikedThisMovies;
 
