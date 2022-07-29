@@ -43,4 +43,6 @@ public class Movies {
     @JsonIgnoreProperties ({"favoriteMovie", "movieList"})
     private List<Actors> actorsWhoLikedThisMovies;
 
+    @ManyToOne (cascade = CascadeType.REFRESH)
+    private ActorsMovies idMoviesActors;
 }
