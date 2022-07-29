@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MovieRepo extends CrudRepository<Movies, Long> {
 
+    Movies findByTitle (String title);
 }

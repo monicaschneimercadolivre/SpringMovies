@@ -19,8 +19,8 @@ public class ActorController {
     private ActorsService actorsService;
 
     @PostMapping
-    public ResponseEntity<Actors> novoActor(@RequestBody Actors actor)  {
-        return ResponseEntity.ok(actorsService.save(actor));
+    public ResponseEntity<Actors> novoActor(@RequestBody Actors actor) throws Exception {
+        return ResponseEntity.ok(actorsService.saveActor(actor));
     }
 
     @GetMapping("/{id}")
