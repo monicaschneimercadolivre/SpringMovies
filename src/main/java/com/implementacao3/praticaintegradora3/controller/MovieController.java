@@ -21,7 +21,7 @@ public class MovieController {
     private MovieService movieService;
 
     @PostMapping 
-    public ResponseEntity<Movies> novoMovie(@RequestBody Movies movie) throws Exception {
+    public ResponseEntity<Movies> novoMovie(@RequestBody Movies movie) {
 
         return ResponseEntity.ok(movieService.saveMovie(movie));
     }
