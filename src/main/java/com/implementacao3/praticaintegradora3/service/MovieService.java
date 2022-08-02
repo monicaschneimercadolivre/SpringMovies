@@ -45,12 +45,29 @@ public class MovieService implements IMoviesService {
         for (Actors a : movie.getActorsList()){
            Actors  actor =actorRepo.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
             if(actor!=null){
+
                 a.setId(actor.getId());
             }else{
-                a.setId(0L);
+
                 actorsService.saveActor(a);
             }
 
+        }
+
+        Movies newMovieLiked = movieRepo.findByTitle(movie.getTitle());
+        if(newMovieLiked!=null){
+            movie.setId(newMovieLiked.getId());
+        }else {
+            movie.setId(0L);
+        }
+        for (Actors a : movie.getActorsWhoLikedThisMovies()) {
+            Actors actor = actorRepo.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
+            if (actor != null) {
+                a.setId(actor.getId());
+            } else {
+
+                actorsService.saveActor(a);
+            }
         }
 
         return movieRepo.save(movie);
