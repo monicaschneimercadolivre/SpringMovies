@@ -25,7 +25,7 @@ public class ActorController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Actors> getActorsById (@PathVariable long id){
-        return ResponseEntity.ok(actorRepo.findById(id).get());
+        return ResponseEntity.ok(actorsService.getById(id));
     }
 
     @GetMapping("/list")

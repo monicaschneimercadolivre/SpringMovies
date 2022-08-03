@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,14 +37,14 @@ public class MovieService implements IMoviesService {
     @Override
     @Transactional
     public Movies saveMovie (Movies movie) {
-        Movies newMovie = movieRepo.findByTitle(movie.getTitle());
+        Movies newMovie = findByMovieTitle(movie.getTitle());
        if(newMovie!=null){
             movie.setId(newMovie.getId());
        }else {
            movie.setId(0L);
        }
         for (Actors a : movie.getActorsList()){
-           Actors  actor =actorRepo.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
+           Actors  actor =actorsService.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
             if(actor!=null){
 
                 a.setId(actor.getId());
@@ -52,24 +53,19 @@ public class MovieService implements IMoviesService {
                 actorsService.saveActor(a);
             }
 
+          /*  for (Actors ac : movie.getActorsWhoLikedThisMovies()){
+                Actors actorLiked =actorRepo.findByFirstNameAndLastName(ac.getFirstName(), ac.getLastName());
+                if (actorLiked!=null){
+                    ac.setId(actorLiked.getId());
+                }else{
+                    actorsService.saveActor(ac);
+                }
+
+
+            }*/
         }
 
-        Movies newMovieLiked = movieRepo.findByTitle(movie.getTitle());
-        if(newMovieLiked!=null){
-            movie.setId(newMovieLiked.getId());
-        }else {
-            movie.setId(0L);
-        }
-        for (Actors a : movie.getActorsWhoLikedThisMovies()) {
-            Actors actor = actorRepo.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
-            if (actor != null) {
-                a.setId(actor.getId());
-            } else {
-
-                actorsService.saveActor(a);
-            }
-        }
-
+       // saveFavoriteMovie(movie);
         return movieRepo.save(movie);
 
     /*   Movies newMovie = movieRepo.save(movie);
@@ -90,5 +86,24 @@ public class MovieService implements IMoviesService {
         /*actorsService.saveAllActors(movie.getActorsWhoLikedThisMovies());
         actorsService.saveAllActors(movie.getActorsList());
         return movieRepo.save(movie);*/
+    }
+
+    public Movies saveFavoriteMovie (Movies movie){
+        Movies newMovieLiked = movieRepo.findByTitle(movie.getTitle());
+        if(newMovieLiked!=null){
+            movie.setId(newMovieLiked.getId());
+        }else {
+            movie.setId(0L);
+        }
+        for (Actors a : movie.getActorsWhoLikedThisMovies()) {
+            Actors actor = actorRepo.findByFirstNameAndLastName(a.getFirstName(), a.getLastName());
+            if (actor != null) {
+                a.setId(actor.getId());
+            } else {
+
+                actorsService.saveActor(a);
+            }
+        }
+        return movieRepo.save(movie);
     }
 }

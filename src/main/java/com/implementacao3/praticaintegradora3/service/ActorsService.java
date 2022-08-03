@@ -1,16 +1,11 @@
 package com.implementacao3.praticaintegradora3.service;
 
+import com.implementacao3.praticaintegradora3.exceptions.IdNotFoundException;
 import com.implementacao3.praticaintegradora3.model.Actors;
-import com.implementacao3.praticaintegradora3.model.Movies;
 import com.implementacao3.praticaintegradora3.repository.ActorRepo;
 import com.implementacao3.praticaintegradora3.repository.MovieRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -26,15 +21,14 @@ public class ActorsService implements IActorService{
     private MovieRepo movieRepo;
 
 
-    public Actors getById(long id) throws Exception {
-        return actorRepo.findById(id).orElseThrow(()->new Exception("Id não encontrado"));
+    public Actors getById(long id) {
+        return actorRepo.findById(id).orElseThrow(()->new IdNotFoundException("Id não encontrado"));
     }
 
     @Override
     public Actors findByFirstNameAndLastName(String firstName, String lastName) {
         return actorRepo.findByFirstNameAndLastName(firstName, lastName);
     }
-
 
     public Actors saveActor(Actors actor) {
         //  List<Actors> actorsListDb = (List<Actors>) actorRepo.findAll();
@@ -46,7 +40,7 @@ public class ActorsService implements IActorService{
 //                }
 //            }
 
-        Actors newActor = actorRepo.findByFirstNameAndLastName(actor.getFirstName(), actor.getLastName());
+        Actors newActor = findByFirstNameAndLastName(actor.getFirstName(), actor.getLastName());
         if (newActor != null) {
             actor.setId(newActor.getId());
         }
