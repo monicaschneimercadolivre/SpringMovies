@@ -13,24 +13,24 @@ import java.util.List;
 @RequestMapping("/actor")
 public class ActorController {
     @Autowired
-    private ActorRepo repo;
+    private ActorRepo actorRepo;
 
     @Autowired
     private ActorsService actorsService;
 
     @PostMapping
-    public ResponseEntity<Actors> novoActor(@RequestBody Actors actor) throws Exception {
+    public ResponseEntity<Actors> novoActor(@RequestBody Actors actor){
         return ResponseEntity.ok(actorsService.saveActor(actor));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Actors> getActorsById (@PathVariable long id){
-        return ResponseEntity.ok(repo.findById(id).get());
+        return ResponseEntity.ok(actorsService.getById(id));
     }
 
     @GetMapping("/list")
     public ResponseEntity<List<Actors>> getAllActors (){
 
-        return  ResponseEntity.ok((List<Actors>) repo.findAll());
+        return  ResponseEntity.ok((List<Actors>) actorRepo.findAll());
     }
 }

@@ -26,7 +26,7 @@ public class Movies {
 
     private Date release_date;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20, unique=true)
     private String title;
 
     private Double rating;
@@ -35,14 +35,15 @@ public class Movies {
 
     private Integer length;
 
-    @ManyToMany(mappedBy = "movieList", cascade = CascadeType.REFRESH)
+    @ManyToMany(cascade = {CascadeType.REFRESH})
+    @JoinTable(name = "actor_movie",
+            joinColumns = {@JoinColumn(name ="movie_id" , referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name ="actor_id" , referencedColumnName = "id")})
     @JsonIgnoreProperties({"movieList", "favoriteMovie"})
     private List<Actors> actorsList;
 
-    @OneToMany (mappedBy = "favoriteMovie", cascade = CascadeType.REFRESH)
-    @JsonIgnoreProperties ({"favoriteMovie", "movieList"})
+    @OneToMany(mappedBy = "favoriteMovie", cascade = CascadeType.REFRESH)
+    @JsonIgnoreProperties({"favoriteMovie", "movieList"})
     private List<Actors> actorsWhoLikedThisMovies;
 
-    @ManyToOne (cascade = CascadeType.REFRESH)
-    private ActorsMovies idMoviesActors;
 }

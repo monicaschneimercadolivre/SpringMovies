@@ -1,12 +1,12 @@
-package com.implementacao3.praticaintegradora3.model;
+package com.implementacao3.praticaintegradora3.modelDto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.implementacao3.praticaintegradora3.model.Movies;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Actors {
+public class ActorsDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

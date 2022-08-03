@@ -4,9 +4,7 @@ import com.implementacao3.praticaintegradora3.model.Actors;
 
 public interface IActorService {
 
-    Actors findByFirstName(String fistName);
-
-    Actors findByLastName(String fistName);
+    Actors getById(long id) throws Exception;
 
     Actors findByFirstNameAndLastName (String firstName, String lastName);
 }
